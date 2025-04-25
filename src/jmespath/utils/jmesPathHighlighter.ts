@@ -8,6 +8,7 @@ import {
   isOptionalIndexExpression,
   isPipeExpression,
   isQuotedStringExpression,
+  isRawStringExpression,
   isSubExpression,
   isUnquotedStringExpression,
 } from "./helpers";
@@ -15,7 +16,7 @@ import {
 type Token = {
   char: string;
   pos: number;
-  variant: "none" | "function" | "variable" | "quoted" | "unquoted";
+  variant: "none" | "function" | "variable" | "quoted" | "unquoted" | "literal";
 };
 
 const parseExpressionToElements = (
@@ -35,8 +36,21 @@ const parseExpressionToElements = (
   }
 
   if (isComparisonExpression(expression)) {
-    parseExpressionToElements(input, expression.lhexp, tokens);
-    parseExpressionToElements(input, expression.rhexp, tokens);
+    if (Array.isArray(expression.lhexp)) {
+      expression.lhexp.forEach((exp) =>
+        parseExpressionToElements(input, exp, tokens),
+      );
+    } else {
+      parseExpressionToElements(input, expression.lhexp, tokens);
+    }
+
+    if (Array.isArray(expression.rhexp)) {
+      expression.rhexp.forEach((exp) =>
+        parseExpressionToElements(input, exp, tokens),
+      );
+    } else {
+      parseExpressionToElements(input, expression.rhexp, tokens);
+    }
   }
 
   if (isNotExpression(expression)) {
@@ -103,6 +117,16 @@ const parseExpressionToElements = (
 
     for (let i = start; i < start + expression.value!.length + 2; i++) {
       tokens[i].variant = "quoted";
+    }
+  }
+
+  if (isRawStringExpression(expression)) {
+    for (
+      let i = expression.pos!;
+      i < expression.pos! + expression.value!.length + 2;
+      i++
+    ) {
+      tokens[i].variant = "literal";
     }
   }
 

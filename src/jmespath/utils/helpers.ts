@@ -13,6 +13,7 @@ import {
   LiteralExpression,
   IndexExpression,
   OptionalIndexExpression,
+  RawStringExpression,
 } from "../grammar/types";
 
 const isFunctionExpression = (
@@ -96,6 +97,12 @@ const isLiteralExpression = (
   );
 };
 
+const isRawStringExpression = (
+  expression?: Expression,
+): expression is RawStringExpression => {
+  return expression?.type === "raw_string";
+};
+
 export {
   isFunctionExpression,
   isIndexExpression,
@@ -110,4 +117,5 @@ export {
   isIdentifierExpression,
   isLiteralExpression,
   isOptionalIndexExpression,
+  isRawStringExpression,
 };

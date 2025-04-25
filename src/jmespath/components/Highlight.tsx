@@ -15,7 +15,7 @@ const COLOR_MAP = {
   none: "#000000",
   function: "#0000FF",
   variable: "#008000",
-  literal: "#800080",
+  literal: "#8000FF",
   number: "#0000FF",
   quoted: "#800080",
   unquoted: "#0000FF",

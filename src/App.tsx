@@ -33,7 +33,7 @@ function App() {
         <div className="flex flex-col w-2xl justify-center items-center gap-4">
           <h2>Result</h2>
           <div className="w-full h-20 bg-gray-200 rounded-md border-2 border-gray-600">
-            <pre>{result}</pre>
+            <pre>{JSON.stringify(result, null, 2)}</pre>
           </div>
         </div>
       </div>
