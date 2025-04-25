@@ -141,6 +141,8 @@ export const highlightJmespath = (
     return null;
   }
 
+  console.log(input, expression);
+
   const tokens = parseExpressionToElements(input, expression as Expression);
 
   return tokens;

@@ -5,7 +5,16 @@ import jmespath from "jmespath";
 
 function App() {
   const [value, setValue] = useState("");
-  const [data, setData] = useState("");
+  const [data, setData] = useState(
+    JSON.stringify(
+      {
+        test: "test",
+        child: { test: "test", child: { test: "test" } },
+      },
+      null,
+      2,
+    ),
+  );
 
   const result = useMemo(() => {
     if (!value) {
@@ -18,7 +27,7 @@ function App() {
       return jmespath.search(JSON.parse(data), value);
     } catch (error) {
       console.error(error);
-      return "";
+      return null;
     }
   }, [data, value]);
 
