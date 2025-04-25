@@ -21,7 +21,8 @@ type ExpressionType =
   | "keyval_exp"
   | "quoted_string"
   | "unquoted_string"
-  | "raw_string";
+  | "raw_string"
+  | "number";
 
 // Base types for expressions
 type BaseExpression = {
